@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MyGalgame</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+<my-nav class="my-nav"></my-nav>
+
+<div class="view full-page" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient2.png);">
+    <!-- Mask & flexbox options-->
+    <div class="container flex-center">
+        <div class="row pt-5 mt-3">
+            <div class="col-md-12 wow fadeIn mb-3" style="animation-name: none; visibility: visible;">
+                <div class="text-center">
+                    <ul>
+                        <li>
+                            <h1 class="display-4 font-bold mb-5 wow fadeInUp"
+                                style="animation-name: none; visibility: visible;">寻找属于自己的GalGame</h1></li>
+                        <li>
+                            <h5 class="mb-5 wow fadeInUp" data-wow-delay="0.2s"
+                                style="animation-name: none; visibility: visible;">基于星云链打造，你所有的游戏数据将永久保存在星云链上</h5>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Page Intro -->
+
+
+<main class="mt-5 pt-5 game-data">
+
+    <div class="container">
+        <!--Section: Jumbotron-->
+        <h1 class="h4 card-title"><strong>游戏类型</strong></h1>
+        <section class=" fadeIn">
+            <div class="game-type">
+                <div class="chip badge-default lighten-4" v-for="tag in tags">
+                    <a @click="searchTags(tag.name)">{{tag.name}}</a>
+                </div>
+            </div>
+            <div class="change-type" v-show="tagSize>tagLength">
+                <button class="btn btn-outline-success btn-sm my-0 waves-effect waves-light"
+                        @click="otherTags">
+                    换一批
+                </button>
+            </div>
+            <div v-show="nowTag">
+                <p>当前搜索标签</p>
+                <div class="chip badge-default lighten-4" v-for="tag in tags">
+                    <a>{{nowTag}}</a>
+                </div>
+            </div>
+            <!-- Content -->
+        </section>
+        <!--Section: Jumbotron-->
+
+        <hr class="my-5 border">
+
+        <h1 class="h4 card-title"><strong>游戏列表</strong></h1>
+        <!--Section: Cards-->
+        <section class="text-center">
+
+            <!--Grid row-->
+            <div class="row mb-4 wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4" v-for="item in gameContent">
+
+                    <!--Card-->
+                    <div class="card">
+
+                        <div class="view overlay">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img v-show="!item.titleImg" src="img/lock-info-img-1.png"
+                                     class="embed-responsive-item" alt="">
+                                <img v-show="item.titleImg" :src="item.titleImg"
+                                     class="embed-responsive-item" alt="">
+                            </div>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <!--Title-->
+                            <h4 class="card-title"><strong>{{item.title}}</strong></h4>
+                            <h5 class="indigo-text"><strong>{{item.creator}}</strong></h5>
+
+                            <p class="card-text">{{item.description}}
+                            </p>
+
+                            <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-o-down black-ic"> </i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i class="fa fa-book tw-ic"> </i>{{item.chapter}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i
+                                    class="fa fa-users tw-ic"> </i>{{item.editor.length}}</a>
+                            <div>
+                                <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.id"><i
+                                        class="fa fa-play mr-1"></i>
+                                    开始游戏</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--/.Card-->
+
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+
+            <!--Pagination-->
+            <my-page></my-page>
+
+        </section>
+        <!--Section: Cards-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+<!--Footer-->
+<my-foot class="my-foot"></my-foot>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/modules/toastr.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/gameCenter.js"></script>
+</body>
+
+</html>

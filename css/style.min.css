@@ -1,0 +1,188 @@
+.view, body, html {
+    height: 100%
+}
+
+.navbar {
+    background-color: #1C2331
+}
+
+.home {
+    background-color: rgba(0, 0, 0, .50)
+}
+
+.page-footer, .top-nav-collapse {
+    background-color: #1C2331
+}
+
+.my-find .md-form{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.my-phone-find{
+    display: none;
+}
+
+ul li{
+    list-style-type:none;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: #1C2331
+    }
+    .navbar-brand{
+        display: none;
+    }
+
+    .my-find{
+        display: none;
+    }
+
+    .my-phone-find{
+        display: block;
+    }
+
+    .editInput {
+        width: 100%;
+    }
+
+}
+
+.full-page{
+    height: 100%;
+    background-size: cover;
+}
+
+.game-page{
+    background-color: #000000;
+    height: 100%;
+    background-size: cover;
+}
+
+.my-navbar .navbar-toggler{
+    position: relative;
+    left: 10px;
+}
+
+.game-type span{
+    font-size: 20px;
+    margin-left: 5px;
+    margin-top: 8px;
+}
+
+.change-type{
+    margin-top: 20px;
+}
+
+.player img{
+    height: 150px;
+    width: 150px;
+}
+
+.player-name{
+    font-size: 30px;
+    width: 10%;
+}
+
+.player-name label{
+    font-size: 30px;
+}
+
+.player-name input{
+
+}
+
+.docs-tabs {
+    margin-top: 1rem
+}
+
+.docs-tabs .nav-link {
+    border-width: 1px 1px 0 1px;
+    border-color: rgba(0, 0, 0, .15);
+    border-style: solid;
+    border-radius: 5px 5px 0 0;
+    margin-right: 8px;
+    margin-bottom: -1px;
+    color: #212529
+}
+
+.docs-tabs .nav-link.active {
+    font-weight: 600;
+    background: #eaeaea
+}
+
+
+.card-icon{
+    margin-right: 15px;
+}
+
+.card-icon i{
+    margin-right: 5px;
+}
+
+.myLabel{
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.editInput {
+    width: 100%;
+}
+
+.editInput textarea{
+    height: 100%;
+}
+
+.game-chapter{
+    height: 300px;
+}
+
+.float-title{
+    position: fixed;
+    top: 40px;
+    right: 30px;
+}
+
+.game-card{
+    font-size: 1rem;
+    width: 200px;
+    margin-left: 80px;
+    margin-top: 100px
+}
+
+.game-card p{
+    margin-bottom: 5px;
+}
+
+.danmu{
+    font-size: .8rem;
+}
+
+
+.game-content{
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, .50);
+}
+
+.game-content p{
+    font-size: 1.2rem;
+    margin-top: 8px
+}
+
+.game-content button{
+    width: 230px;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.switch-version {
+    position: fixed;
+    height: 400px;
+    width: 200px;
+    background: #fff;
+    right: 0;
+    top: 300px;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}

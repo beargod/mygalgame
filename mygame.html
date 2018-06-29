@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MyGalgame</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331 !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<my-nav class="my-nav"></my-nav>
+
+<main class="mt-5 pt-5 user-data">
+    <div class="container">
+        <div class="row ">
+
+            <!--Grid column-->
+            <div class="col-md-12">
+
+                <!--Card-->
+                <div class="card testimonial-card">
+
+                    <!--Bacground color-->
+                    <div class="card-up indigo lighten-1">
+                    </div>
+
+                    <!--Avatar-->
+                    <div class="avatar mx-auto" v-show="!user.avatar&&!user"><img src="img/def-avatar.png"
+                                                                                  class="rounded-circle"></div>
+                    <div v-show="!user.avatar&&user">
+                        <form class="md-form">
+                            <div class="file-field avatar mx-auto">
+                                <div>
+                                    <img src="img/def-avatar.png" class="rounded-circle">
+                                    <input type="file" v-on:change="uploadGame($event)">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div v-show="user.avatar">
+                        <form class="md-form">
+                            <div class="file-field avatar mx-auto">
+                                <div>
+                                    <img :src="user.avatar" class="rounded-circle">
+                                    <input type="file" v-on:change="uploadGame($event)">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="card-body">
+                        <!--Name-->
+                        <a class="card-title player-name" v-show="!user.name">未登入</a>
+                        <a class="card-title player-name" @click="editName"
+                           v-show="user.name&&!nameEdit">{{user.name}}</a>
+
+                        <input type="text" id="form1" @blur="saveName" class="card-title player-name" v-show="nameEdit"
+                               v-model="user.name">
+                        <hr>
+                        <!--Quotation-->
+                        <p>存档数量:{{user.gameSize}}&emsp;&emsp;收藏数量:{{user.likeSize}}&emsp;&emsp;弹幕数量:{{user.danmuSize}}&emsp;&emsp;创建游戏:{{user.mySize}}&emsp;&emsp;编辑游戏:{{user.editSize}}</p>
+                        <a class="btn btn-primary waves-light" href="creategame.html"><i class="fa fa-plus mr-1"></i>
+                            创建游戏</a>
+
+                        <button class="btn btn-grey" disabled="true" v-show="!isEdit"><i class="fa fa-edit mr-1"></i>
+                            提交修改
+                        </button>
+
+                        <button class="btn light-green" style="display: none" v-show="isEdit" @click="updateUser"><i
+                                class="fa fa-edit mr-1"></i> 提交修改
+                        </button>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+        </div>
+
+        <!--Section: Cards-->
+        <section class="text-center">
+            <ul class="nav docs-tabs">
+                <li class="nav-item"><a @click="changeTab(0)" class="nav-link active" href="#intro-n-fx-s1"
+                                        data-toggle="tab"
+                                        role="tab">游戏存档</a></li>
+                <li class="nav-item"><a @click="changeTab(1)" class="nav-link" href="#intro-n-fx-s2" data-toggle="tab"
+                                        role="tab">游戏收藏</a>
+                </li>
+                <li class="nav-item"><a @click="changeTab(2)" class="nav-link" href="#intro-n-fx-s2" data-toggle="tab"
+                                        role="tab">我的游戏</a>
+                </li>
+                <li class="nav-item"><a @click="changeTab(3)" class="nav-link" href="#intro-n-fx-s2" data-toggle="tab"
+                                        role="tab">编辑历史</a>
+                </li>
+            </ul>
+
+            <hr class="my-3">
+            <!--Grid row-->
+
+            <div v-show="gameContent.length==0" class="mx-5" style="margin-bottom: 200px">
+                没有找到你的游戏数据哦。
+            </div>
+
+            <div class="row mb-4 wow fadeIn" v-show="gameContent">
+
+
+                <!--存档-->
+                <div class="col-lg-4 col-md-12 mb-4" v-if="tab==0">
+
+
+                    <!--Card-->
+                    <div class="card" v-for="item in gameContent">
+
+                        <!--Card image-->
+                        <div class="view overlay" v-show="item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" :src="item.titleImg"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <div class="view overlay" v-show="!item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <!--Card content-->
+                        <div class="card-body">
+                            <!--Title-->
+                            <h4 class="card-title">{{item.game.title}}</h4>
+                            <!--Text-->
+                            <p class="card-text">{{item.game.creator}}</p>
+                            <p class="card-text">
+                                <strong>当前章节</strong>
+                            </p>
+                            <p class="card-text">
+                                <strong>{{item.chapter.text}}</strong>
+                            </p>
+                            <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart red-ic"> </i>{{item.game.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart-o red-ic"> </i>{{item.game.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.game.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-o-down black-ic"> </i>{{item.game.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i class="fa fa-book tw-ic"> </i>{{item.game.chapter}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i
+                                    class="fa fa-users tw-ic"> </i>{{item.game.editor.length}}</a>
+                            <div>
+                                <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.game.id+'&cid='+item.chapter.id"><i
+                                        class="fa fa-play mr-1" ></i>
+                                    继续游戏</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--收藏-->
+                <div class="col-lg-4 col-md-12 mb-4" v-else-if="tab==1">
+
+                    <!--Card-->
+                    <div class="card" v-for="item in gameContent">
+
+                        <!--Card image-->
+                        <div class="view overlay" v-show="item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" :src="item.titleImg"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <div class="view overlay" v-show="!item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <!--Card content-->
+                        <div class="card-body">
+                            <!--Title-->
+                            <h4 class="card-title">{{item.title}}</h4>
+                            <!--Text-->
+                            <p class="card-text">{{item.creator}}</p>
+                            <p class="card-text">
+                                <strong>{{item.description}}</strong>
+                            </p>
+                            <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-o-down black-ic"> </i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i class="fa fa-book tw-ic"> </i>{{item.chapter}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i
+                                    class="fa fa-users tw-ic"> </i>{{item.editor.length}}</a>
+                            <div>
+                                <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm waves-light"><i
+                                        class="fa fa-play mr-1" :href="'nowgame.html?id='+item.id"></i>
+                                    进入游戏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--我的游戏-->
+                <div class="col-lg-4 col-md-12 mb-4" v-else-if="tab==2">
+
+                    <!--Card-->
+                    <div class="card" v-for="item in gameContent">
+
+                        <!--Card image-->
+                        <div class="view overlay" v-show="item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" :src="item.titleImg"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <div class="view overlay" v-show="!item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <!--Card content-->
+                        <div class="card-body">
+                            <!--Title-->
+                            <h4 class="card-title">{{item.title}}</h4>
+                            <!--Text-->
+                            <p class="card-text">{{item.creator}}</p>
+                            <p class="card-text">
+                                <strong>{{item.description}}</strong>
+                            </p>
+                            <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-o-down black-ic"> </i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i class="fa fa-book tw-ic"> </i>{{item.chapter}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i
+                                    class="fa fa-users tw-ic"> </i>{{item.editor.length}}</a>
+                            <div>
+                                <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.id"><i
+                                        class="fa fa-play mr-1"></i>
+                                    进入游戏</a>
+                                <a class="btn light-green btn-sm waves-light"
+                                   :href="'editgame.html?id='+item.id+'&name='+item.title+'&titleImg='+item.titleImg+'&types='+item.type+'&detail='+item.description"><i
+                                        class="fa fa-edit mr-1"></i>
+                                    修改游戏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Card-->
+                <div class="col-lg-4 col-md-12 mb-4" v-else>
+
+                    <!--Card-->
+                    <div class="card" v-for="item in gameContent">
+
+                        <!--Card image-->
+                        <div class="view overlay" v-show="item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" :src="item.titleImg"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <div class="view overlay" v-show="!item.titleImg">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
+                                     allowfullscreen>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!--Title-->
+                            <h4 class="card-title">{{item.title}}</h4>
+                            <!--Text-->
+                            <p class="card-text">{{item.creator}}</p>
+                            <p class="card-text">参与编辑了{{item.editChapter}}个章节</p>
+                            <p class="card-text">
+                                <strong>{{item.description}}</strong>
+                            </p>
+                            <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.liked" @click="like(item.id)"><i
+                                    class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked" @click="unlike(item.id)"><i
+                                    class="fa fa-thumbs-o-down black-ic"> </i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i class="fa fa-book tw-ic"> </i>{{item.chapter}}</a>
+                            <a class="icons-sm li-ic card-icon" v-show="!item.unliked"><i
+                                    class="fa fa-users tw-ic"> </i>{{item.editor.length}}</a>
+                            <div>
+                                <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.id"><i
+                                        class="fa fa-play mr-1" ></i>
+                                    进入游戏</a>
+                                <a class="btn light-green btn-sm waves-light"
+                                   :href="'mychapter.html?id='+item.id+'&total='+item.chapter"><i
+                                        class="fa fa-plus mr-1"></i>
+                                    我的章节</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Grid row-->
+
+            <!--Pagination-->
+            <my-page>
+
+            </my-page>
+            <!--Pagination-->
+
+        </section>
+        <!--Section: Cards-->
+
+    </div>
+</main>
+<my-foot class="my-foot"></my-foot>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/modules/toastr.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/mygame.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MyGalgame</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331 !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<my-nav class="my-nav"></my-nav>
+<div class="view game-page game-data">
+    <div class="row" style="height: 100%">
+
+        <div class=" col-md-2">
+            <div class="card card-body game-card">
+                <!--Title-->
+                <h4 class="card-title"><strong>{{game.title}}</strong></h4>
+
+                <p>上个选择：</p>
+                <p>{{lastSelectText}}</p>
+                <p>当前剧情：</p>
+                <p>{{chapter.text}}</p>
+                <div>
+                    <a class="icons-sm li-ic card-icon" v-show="chapter.liked" @click="like"><i
+                            class="fa fa-heart red-ic"> </i>{{chapter.like}}</a>
+                    <a class="icons-sm li-ic card-icon" v-show="!chapter.liked" @click="like"><i
+                            class="fa fa-heart-o red-ic"> </i>{{chapter.like}}</a>
+                    <a class="icons-sm li-ic card-icon" v-show="chapter.unliked" @click="unlike"><i
+                            class="fa fa-thumbs-down tw-ic"></i>{{chapter.unlike}}</a>
+                    <a class="icons-sm li-ic card-icon" v-show="!chapter.unliked" @click="unlike"><i
+                            class="fa fa-thumbs-o-down black-ic"> </i>{{chapter.unlike}}</a>
+                </div>
+                <p>选项筛选：</p>
+                <div>
+                    <select class="browser-default" v-model="mode">
+                        <option value="0">最热的</option>
+                        <option value="1">最新的</option>
+                        <option value="2">随机的</option>
+                        <option value="2">该作者</option>
+                    </select>
+                </div>
+                <div class="md-form editInput ">
+                <button @click="save" class="btn btn-sm btn-light-green"><i class="fa fa-plus mr-1"></i> 存档
+                </button>
+                </div>
+                <hr>
+                <p>发送弹幕：</p>
+                <div class="md-form editInput ">
+                    <input id="game-tags" class="form-control border" type="text" length="50" v-model="aDanmu">
+                    <label for="game-tags">&emsp;写个弹幕吧</label>
+                    <button @click="sendDanmu" class="btn btn-sm btn-light-green"><i class="fa fa-plus mr-1"></i> 发送
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-8 full-page" :style="'background-image: url('+gameImage+');'">
+            <div style="height: 80%" id="game">
+
+            </div>
+            <div class="card card-cascade wider reverse white-text"
+                 style="bottom: 50px;height:18%;width: 100%;">
+                <div class=" game-content card-body text-sm-left " @click="nextText">
+                    <div style="height:140px;">
+                        <p v-show="loadGame">游戏数据加载中，请稍等</p>
+                        <p v-show="!loadGame">{{text[nowText]}}</p>
+                    </div>
+                    <div style="height: 20%;">
+                        <p v-show="!loadGame&&text.length>nowText+1" class="float-right">点击继续...</p>
+                        <p v-show="!loadGame&&text.length<=nowText+1&&selects.length>0" class="float-right">请做出你的选择</p>
+                        <p v-show="!loadGame&&text.length<=nowText+1&&selects.length==0&&!chapter.isOver" class="float-right">未完待续...</p>
+                        <p v-show="!loadGame&&text.length<=nowText+1&&chapter.isOver" class="float-right">游戏结束...</p>
+                    </div>
+                </div>
+            </div>
+            <!--Section: Jumbotron-->
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a v-show="chapter.isEdit&&!chapter.isOver" :href="'createchapter.html?id='+chapter.id"
+                   class="btn-floating btn-lg red waves-effect waves-light" >
+                    <i class="fa fa-pencil"></i>
+                </a>
+                <a v-show="!chapter.isEdit"
+                   class="btn-floating btn-lg grey waves-effect waves-light">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </div>
+        </div>
+
+        <div v-show="text.length>nowText" class=" col-md-2 game-content">
+            <div style="position: fixed;bottom: 150px;">
+                <button v-show="nowText==text.length-1" v-for="select in selects" class="btn btn-md btn-light-green" @click="nextChapter(select.toChapter,select.img)">{{select.description}}
+                </button>
+                <button v-show="selects.length>6" class="btn btn-sm btn-red">换一批</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<my-foot class="my-foot" style="display: none"></my-foot>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/danmuku.min.js"></script>
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/nowgame.js"></script>
+<!-- Initializations -->
+<script type="text/javascript">
+    var danmaku = new Danmaku();
+    danmaku.init({
+        // 用于显示弹幕的「舞台」会被添加到该容器中
+        container: document.getElementById('game'),
+
+        // 弹幕数据数组，在 emit API 中会说明其格式
+        comments: [],
+
+        // 支持 DOM 引擎和 canvas 引擎。canvas 引擎一般比 DOM 更高效，但相对更耗内存。
+        // 默认为 DOM 引擎
+        engine: 'canvas',
+
+        // 弹幕速度，也可以用 speed API 设置
+        speed: 144
+    });
+</script>
+</body>
+
+</html>

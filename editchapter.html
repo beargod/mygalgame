@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MyGalgame</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331 !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<my-nav class="my-nav"></my-nav>
+
+<main class="mt-5 pt-5">
+    <div class="container c-chapter">
+        <div class="row">
+            <div class="card card-cascade wider reverse my-4">
+
+                <!--Card image-->
+                <div class="view overlay hm-white-slight waves-light">
+                    <img :src="game.titileImg" class="img-fluid">
+                    <a>
+                        <div class="mask"></div>
+                    </a>
+                </div>
+                <!--/Card image-->
+
+                <!--Card content-->
+                <div class="card-body text-center">
+                    <!--Title-->
+                    <h4 class="card-title"><strong>{{game.title}}</strong></h4>
+                    <h5 class="indigo-text"><strong>{{game.creator}}</strong></h5>
+
+                    <p class="card-text">{{game.description}}
+                    </p>
+                    <a class="icons-sm li-ic card-icon"><i
+                            class="fa fa-heart red-ic"> </i>{{game.like.length}}</a>
+                    <a class="icons-sm li-ic card-icon" ><i
+                            class="fa fa-thumbs-down tw-ic"></i>{{game.unlike.length}}</a>
+                    <a class="icons-sm li-ic card-icon"><i class="fa fa-book tw-ic"> </i>{{game.chapter}}</a>
+
+                </div>
+                <!--/.Card content-->
+
+            </div>
+        </div>
+        <!--Section: Jumbotron-->
+
+        <hr class="my-5">
+
+        <!--Section: Cards-->
+        <section class="text-center">
+            <div class="row">
+
+                <div class="card-body text-left">
+                    <!--Title-->
+                    <h1 class="h4 card-title"><strong>当前章节</strong></h1>
+                    <p class="h5 mt-4">游戏剧情</p>
+                    <p>{{chapter.text}}</p>
+                    <p class="h5 mt-4">编辑状态</p>
+                    <p v-show="!chapter.isEdit">不可编辑</p>
+                    <p v-show="chapter.isEdit">可以编辑</p>
+                    <p class="h5 mt-4">是否结束</p>
+                    <p v-show="!chapter.isOver">未结束</p>
+                    <p v-show="chapter.isOver">已结束</p>
+                </div>
+            </div>
+            <hr class="my-2">
+            <div class="row">
+
+                <div class="card-body text-left">
+                    <!--Title-->
+                    <h1 class="h4 card-title"><strong>添加剧情</strong></h1>
+
+                    <div class="md-form editInput "  v-show = "!firstChapter">
+                        <input v-model="selectText" id="description" class="form-control border" type="text" length="10" mdbCharCounter mdbInputDirective>
+                        <label for="description">&emsp;选择项描述</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 image-upload" v-show = "!firstChapter">
+                            <form class="md-form">
+                                <div class="file-field">
+                                    <div class="d-flex justify-content-center" style="margin-bottom: 20px">
+                                        <div class="float-left">
+                                            <span>上传衔接图片</span>
+                                        </div>
+                                    </div>
+                                    <div class="z-depth-1-half mb-4">
+                                        <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                             class="img-fluid card-img-top title_img"  v-show="!contactImg">
+                                        <img :src="contactImg"
+                                             class="img-fluid card-img-top title_img" v-show="contactImg">
+                                        <input type="file" v-on:change="uploadContact($event)">
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-5 image-upload" >
+                            <form class="md-form">
+                                <div class="file-field" >
+                                    <div class="d-flex justify-content-center" style="margin-bottom: 20px">
+                                        <div class="float-left">
+                                            <span>上传剧情图片</span>
+                                        </div>
+                                    </div>
+                                    <div class="z-depth-1-half mb-4" >
+                                        <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                             class=" img-fluid game_img"   v-show="!gameImg">
+                                        <img :src="gameImg"
+                                             class=" img-fluid game_img"  v-show="gameImg">
+                                        <input type="file" v-on:change="uploadGame($event)">
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="md-form editInput game-chapter">
+                        <textarea v-model="chapterText" class="md-textarea form-control border" rows="3" id="chapter_text" type="text" length="500" mdbCharCounter mdbInputDirective></textarea>
+                        <label for="chapter_text">&emsp;游戏剧情</label>
+                    </div>
+
+                    <div class="switch" style="margin-top: 70px">
+                        <label style="width: 10%" v-show="!chapterFinished">未结束</label>
+                        <label style="width: 10%" v-show="chapterFinished">已结束</label>
+                        <label>
+                            <input v-model="chapterFinished" type="checkbox" >
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+
+                    <div class="switch">
+                        <label style="width: 10%" v-show="!chapterEdited">不可编辑</label>
+                        <label style="width: 10%" v-show="chapterEdited">可以编辑</label>
+                        <label>
+                            <input v-model="chapterEdited" type="checkbox">
+                            <span class="lever"></span>
+                        </label>
+                    </div>
+                    <button class="btn btn-light-green" @click="commitChapter" ><i class="fa fa-edit mr-1"></i> 提交</button>
+                </div>
+            </div>
+        </section>
+        <!--Section: Cards-->
+
+    </div>
+</main>
+<!--Main layout-->
+<my-foot class="my-foot"></my-foot>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/qiniu.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/core-min.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+<script type="text/javascript" src="js/enc-base64.js"></script>
+<script type="text/javascript" src="js/hmac.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/qiuniu.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/editChapter.js"></script>
+</body>
+
+</html>

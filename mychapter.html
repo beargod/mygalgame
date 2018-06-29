@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MyGalgame</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <style type="text/css">
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #1C2331 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<my-nav class="my-nav"></my-nav>
+
+<main class="mt-5 pt-5">
+    <div class="container m-chapter">
+
+        <div class="row">
+            <div class="card card-cascade wider reverse my-4">
+
+                <div class="card-body text-center">
+                    <!--Title-->
+                    <h4 class="card-title"><strong>{{game.title}}</strong></h4>
+                    <h5 class="indigo-text"><strong>{{game.creator}}</strong></h5>
+
+                    <p class="card-text">{{game.description}}
+                    </p>
+
+                    <!--Linkedin-->
+                    <!--<a class="icons-sm li-ic card-icon"><i class="fa fa-heart red-ic"> </i>10</a>-->
+                    <a class="icons-sm li-ic card-icon" ><i class="fa fa-heart-o red-ic"> </i>10</a>
+                    <!--Twitter-->
+                    <a class="icons-sm li-ic card-icon"><i class="fa fa-thumbs-down tw-ic"></i>10</a>
+                    <!--Dribbble-->
+                    <!--<a class="icons-sm fb-ic"><i class="fa fa-thumbs-o-down black-ic"> </i>10</a>-->
+                </div>
+                <!--/.Card content-->
+
+            </div>
+        </div>
+        <!--Section: Jumbotron-->
+
+        <hr class="my-5">
+
+        <!--Section: Cards-->
+        <section class="text-center">
+
+            <!--Grid row-->
+            <div class="row mb-4 wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-12 mb-4" v-for="item in myChapters">
+
+                    <!--Card-->
+                    <div class="card">
+
+                        <div class="view overlay" v-show="!item.img">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
+                                     >
+                            </div>
+                        </div>
+
+                        <div class="view overlay" v-show="item.img">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                                <img class="embed-responsive-item" :src="item.img"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <h5 class="indigo-text"><strong>{{item.lastSelect.text}}</strong></h5>
+
+                            <p class="card-text">{{item.text}}
+                            </p>
+
+                            <!--<a class="icons-sm li-ic card-icon"><i class="fa fa-heart red-ic"> </i>10</a>-->
+                            <a class="icons-sm li-ic card-icon" ><i class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon"><i class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="btn light-green btn-sm waves-light" :href="'editchapter.html?id='+item.id"><i
+                                    class="fa fa-edit mr-1"></i>
+                                修改</a>
+                        </div>
+
+                    </div>
+                    <!--/.Card-->
+
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+
+            <!--Pagination-->
+            <my-page></my-page>
+            <!--Pagination-->
+
+        </section>
+        <!--Section: Cards-->
+
+    </div>
+</main>
+<my-foot class="my-foot"></my-foot>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="js/modules/toastr.js"></script>
+<script type="text/javascript" src="js/nebPay.js"></script>
+<script type="text/javascript" src="js/nebulas.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/mychapter.js"></script>
+</body>
+
+</html>
