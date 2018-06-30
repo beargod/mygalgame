@@ -154,13 +154,13 @@ var myFoot = Vue.component("my-foot",{
     '    <div class="pb-4">\n' +
     '        <div class="footer-copyright">\n' +
     '            © 2018 Copyright:\n' +
-    '            <a href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank"> MDBootstrap.com </a>\n' +
+    '            <a href="https://github.com/beargod" target="_blank"> github.com/beargod </a>\n' +
     '        </div>\n' +
     '        <div class="footer-copyright">\n' +
     '            use: <a href="nebulas.io" target="_blank"> Nebulas </a>\n' +
     '        </div>\n' +
     '        <div class="footer-copyright">\n' +
-    '            contact: <a href="nebulas.io" target="_blank"> 729880623@qq.com </a>\n' +
+    '            contact: <a target="_blank"> 729880623@qq.com </a>\n' +
     '        </div>\n' +
     '    </div>\n' +
     '</footer>'
@@ -215,7 +215,7 @@ function cbnetwork(rs) {
 function cbgetnetwork(rs) {
     if (rs == "Network Error") {
         nav.$children[0].serviceStatus="网络卡顿，请稍后再试";
-        window.location.reload();
+        loadUser();
         return
     }
     if (rs.execute_err) {
@@ -264,7 +264,7 @@ function nebGet(f, a, t) {
             t(a)
         }).catch(function (e){
             nav.$children[0].serviceStatus="网络卡顿，请稍后刷新";
-            window.location.reload();
+            loadUser();
         });
 }
 

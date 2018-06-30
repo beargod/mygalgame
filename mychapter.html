@@ -43,7 +43,7 @@
 
                     <!--Linkedin-->
                     <!--<a class="icons-sm li-ic card-icon"><i class="fa fa-heart red-ic"> </i>10</a>-->
-                    <a class="icons-sm li-ic card-icon" ><i class="fa fa-heart-o red-ic"> </i>10</a>
+                    <a class="icons-sm li-ic card-icon"><i class="fa fa-heart-o red-ic"> </i>10</a>
                     <!--Twitter-->
                     <a class="icons-sm li-ic card-icon"><i class="fa fa-thumbs-down tw-ic"></i>10</a>
                     <!--Dribbble-->
@@ -70,17 +70,14 @@
                     <div class="card">
 
                         <div class="view overlay" v-show="!item.img">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
-                                     >
-                            </div>
+                            <img class="my-image" src="img/lock-info-img.png"
+                            >
                         </div>
 
                         <div class="view overlay" v-show="item.img">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" :src="item.img"
-                                >
-                            </div>
+
+                            <img class="my-image" :src="item.img"
+                            >
                         </div>
 
                         <div class="card-body text-center">
@@ -90,8 +87,9 @@
                             </p>
 
                             <!--<a class="icons-sm li-ic card-icon"><i class="fa fa-heart red-ic"> </i>10</a>-->
-                            <a class="icons-sm li-ic card-icon" ><i class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
-                            <a class="icons-sm li-ic card-icon"><i class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
+                            <a class="icons-sm li-ic card-icon"><i class="fa fa-heart-o red-ic"> </i>{{item.like}}</a>
+                            <a class="icons-sm li-ic card-icon"><i
+                                    class="fa fa-thumbs-down tw-ic"></i>{{item.unlike}}</a>
                             <a class="btn light-green btn-sm waves-light" :href="'editchapter.html?id='+item.id"><i
                                     class="fa fa-edit mr-1"></i>
                                 修改</a>

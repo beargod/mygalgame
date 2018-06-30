@@ -134,17 +134,13 @@
 
                         <!--Card image-->
                         <div class="view overlay" v-show="item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" :src="item.titleImg"
-                                     allowfullscreen>
-                            </div>
+                            <img class="my-image" :src="item.titleImg"
+                            >
                         </div>
 
                         <div class="view overlay" v-show="!item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
-                                     allowfullscreen>
-                            </div>
+                            <img class="my-image" src="img/lock-info-img.png"
+                            >
                         </div>
 
                         <!--Card content-->
@@ -174,8 +170,9 @@
                                 <span v-for="tag in item.type" class="badge badge-default" style="margin-left: 10px">{{tag}}</span>
                             </div>
                             <div>
-                                <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.game.id+'&cid='+item.chapter.id"><i
-                                        class="fa fa-play mr-1" ></i>
+                                <a class="btn btn-primary btn-sm waves-light"
+                                   :href="'nowgame.html?id='+item.game.id+'&cid='+item.chapter.id"><i
+                                        class="fa fa-play mr-1"></i>
                                     继续游戏</a>
                             </div>
                         </div>
@@ -190,17 +187,10 @@
 
                         <!--Card image-->
                         <div class="view overlay" v-show="item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" :src="item.titleImg"
-                                     allowfullscreen>
-                            </div>
-                        </div>
-
-                        <div class="view overlay" v-show="!item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
-                                     allowfullscreen>
-                            </div>
+                            <img class="my-image" :src="item.titleImg" v-show="item.titleImg"
+                            >
+                            <img class="my-image" src="img/lock-info-img.png" v-show="!item.titleImg"
+                            >
                         </div>
 
                         <!--Card content-->
@@ -242,17 +232,14 @@
 
                         <!--Card image-->
                         <div class="view overlay" v-show="item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" :src="item.titleImg"
-                                     allowfullscreen>
-                            </div>
+
+                                <img class="my-image" :src="item.titleImg">
+
                         </div>
 
                         <div class="view overlay" v-show="!item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
-                                     allowfullscreen>
-                            </div>
+
+                                <img class="my-image" src="img/lock-info-img.png">
                         </div>
 
                         <!--Card content-->
@@ -298,17 +285,15 @@
 
                         <!--Card image-->
                         <div class="view overlay" v-show="item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" :src="item.titleImg"
-                                     allowfullscreen>
-                            </div>
+
+                                <img class="my-image" :src="item.titleImg"
+                                     >
+
                         </div>
 
                         <div class="view overlay" v-show="!item.titleImg">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img class="embed-responsive-item" src="img/lock-info-img-1.png"
-                                     allowfullscreen>
-                            </div>
+                                <img class="my-image" src="img/lock-info-img.png"
+                                     >
                         </div>
 
                         <div class="card-body">
@@ -336,7 +321,7 @@
                             </div>
                             <div>
                                 <a class="btn btn-primary btn-sm waves-light" :href="'nowgame.html?id='+item.id"><i
-                                        class="fa fa-play mr-1" ></i>
+                                        class="fa fa-play mr-1"></i>
                                     进入游戏</a>
                                 <a class="btn light-green btn-sm waves-light"
                                    :href="'mychapter.html?id='+item.id+'&total='+item.chapter"><i

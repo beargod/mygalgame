@@ -28,7 +28,7 @@
 
 <my-nav class="my-nav"></my-nav>
 
-<div class="view full-page" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient2.png);">
+<div class="view full-page" style="background-image: url(img/gradient2.png);">
     <!-- Mask & flexbox options-->
     <div class="container flex-center">
         <div class="row pt-5 mt-3">
@@ -94,12 +94,10 @@
                     <div class="card">
 
                         <div class="view overlay">
-                            <div class="embed-responsive embed-responsive-16by9 rounded-top">
-                                <img v-show="!item.titleImg" src="img/lock-info-img-1.png"
-                                     class="embed-responsive-item" alt="">
-                                <img v-show="item.titleImg" :src="item.titleImg"
-                                     class="embed-responsive-item" alt="">
-                            </div>
+                            <img v-show="!item.titleImg" src="img/lock-info-img.png"
+                                     class="my-image" alt="">
+                            <img v-show="item.titleImg" :src="item.titleImg"
+                                     class="my-image" alt="">
                         </div>
 
                         <div class="card-body text-center">
@@ -107,7 +105,7 @@
                             <h4 class="card-title"><strong>{{item.title}}</strong></h4>
                             <h5 class="indigo-text"><strong>{{item.creator}}</strong></h5>
 
-                            <p class="card-text">{{item.description}}
+                            <p class="card-text">{{item.description.length>30?item.description.substring(0,30):item.description}}
                             </p>
 
                             <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i

@@ -17,7 +17,7 @@ $(function () {
         , stopper: "#YourStopperId"
     });
 });
-var defaultImg = "https://mdbootstrap.com/img/Photos/Others/gradient2.png";
+var defaultImg = "img/gradient2.png";
 
 var gameData = new Vue({
     el:".game-data",
