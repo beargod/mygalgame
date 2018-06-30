@@ -130,7 +130,7 @@ var myNav =  Vue.component("my-nav",{
     '                     :src="user.avatar"\n' +
     '                     class="img-fluid rounded-circle z-depth-0 mr-2" v-show="user.avatar">{{user.name}}</a>\n' +
     '\n' +
-    '            <a class="nav-link btn-sm border border-light rounded " href="#" \n' +
+    '            <a class="nav-link btn-sm border border-light rounded " href="https://github.com/nebulasio/WebExtensionWallet" \n' +
     '               aria-haspopup="true" aria-expanded="true" v-show="!user.name&&!web_wallet">点击安装钱包</a>\n' +
     '            <a class="nav-link btn-sm border border-light rounded " href="#" ' +
     '               aria-haspopup="true" aria-expanded="true" v-show="!user.name&&web_wallet">请导入用户</a>\n' +
