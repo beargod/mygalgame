@@ -200,7 +200,7 @@
                             <!--Text-->
                             <p class="card-text">{{item.creator}}</p>
                             <p class="card-text">
-                                <strong>{{item.description}}</strong>
+                                <strong>{{item.description.length>50?item.description.substring(0,50)+'......':item.description}}</strong>
                             </p>
                             <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
                                     class="fa fa-heart red-ic"> </i>{{item.like}}</a>
@@ -249,7 +249,7 @@
                             <!--Text-->
                             <p class="card-text">{{item.creator}}</p>
                             <p class="card-text">
-                                <strong>{{item.description}}</strong>
+                                <strong>{{item.description.length>50?item.description.substring(0,50)+'......':item.description}}</strong>
                             </p>
                             <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
                                     class="fa fa-heart red-ic"> </i>{{item.like}}</a>
@@ -303,7 +303,7 @@
                             <p class="card-text">{{item.creator}}</p>
                             <p class="card-text">参与编辑了{{item.editChapter}}个章节</p>
                             <p class="card-text">
-                                <strong>{{item.description}}</strong>
+                                <strong>{{item.description.length>50?item.description.substring(0,50)+'......':item.description}}</strong>
                             </p>
                             <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
                                     class="fa fa-heart red-ic"> </i>{{item.like}}</a>

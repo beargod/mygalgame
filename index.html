@@ -105,7 +105,7 @@
                             <h4 class="card-title"><strong>{{item.title}}</strong></h4>
                             <h5 class="indigo-text"><strong>{{item.creator}}</strong></h5>
 
-                            <p class="card-text">{{item.description.length>30?item.description.substring(0,30):item.description}}
+                            <p class="card-text">{{item.description.length>50?item.description.substring(0,50)+'......':item.description}}
                             </p>
 
                             <a class="icons-sm li-ic card-icon" v-show="item.liked" @click="like(item.id)"><i
