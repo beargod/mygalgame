@@ -115,7 +115,7 @@ var myNav =  Vue.component("my-nav",{
     '                    <a class="nav-link" href="mygame.html">我的游戏</a>\n' +
     '                </li>\n' +
     '                <li class="nav-item">\n' +
-    '                    <a class="nav-link" href="mygame.html">合约地址</a>\n' +
+    '                    <a class="nav-link" href="https://explorer.nebulas.io/#/address/n1rgyZzqd69zSbXzcpQkcCNDDrxx7qAki1R">合约地址</a>\n' +
     '                </li>\n' +
     '            </ul>\n' +
     '        </div>\n' +
